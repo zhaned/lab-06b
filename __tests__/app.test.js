@@ -31,31 +31,80 @@ describe('app routes', () => {
       return client.end(done);
     });
 
-    test('returns animals', async() => {
+    test('returns data', async() => {
 
       const expectation = [
         {
-          'id': 1,
-          'name': 'bessie',
-          'coolfactor': 3,
-          'owner_id': 1
+          id: 1,
+          name: '3700x',
+          cores: 8,
+          integrated_gpu: false,
+          tdp: 65, 
+          family: 'Ryzen',
+          owner_id: 1,
         },
         {
-          'id': 2,
-          'name': 'jumpy',
-          'coolfactor': 4,
-          'owner_id': 1
+          id: 2,
+          name: '3600',
+          cores: 6,
+          integrated_gpu: false,
+          tdp: 65, 
+          family: 'Ryzen',
+          owner_id: 1,
+        },  
+        {
+          id: 3,
+          name: '3000g',
+          cores: 2,
+          integrated_gpu: true,
+          tdp: 35, 
+          family: 'Athlon',
+          owner_id: 1,
         },
         {
-          'id': 3,
-          'name': 'spot',
-          'coolfactor': 10,
-          'owner_id': 1
+          id: 4,
+          name: '3900x',
+          cores: 12,
+          integrated_gpu: false,
+          tdp: 105, 
+          family: 'Ryzen',
+          owner_id: 1,
+        },
+        {
+          id: 5,
+          name: '3200g',
+          cores: 4,
+          integrated_gpu: true,
+          tdp: 65, 
+          family: 'Ryzen',
+          owner_id: 1,
         }
       ];
 
       const data = await fakeRequest(app)
-        .get('/animals')
+        .get('/cpuData')
+        .expect('Content-Type', /json/)
+        .expect(200);
+
+      expect(data.body).toEqual(expectation);
+    });
+
+    test('returns the first data item', async() => {
+
+      const expectation = [
+        {
+          id: 1,
+          name: '3700x',
+          cores: 8,
+          integrated_gpu: false,
+          tdp: 65, 
+          family: 'Ryzen',
+          owner_id: 1,
+        },
+      ];
+
+      const data = await fakeRequest(app)
+        .get('/cpuData/1')
         .expect('Content-Type', /json/)
         .expect(200);
 
