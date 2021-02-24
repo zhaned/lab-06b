@@ -149,39 +149,37 @@ describe('app routes', () => {
     });
 
     test('deletes the first data item', async () => {
-      const expectation = [
-        {
-          category_id: 1,
-          name: '3700x',
-          cores: 8,
-          integrated_gpu: false,
-          tdp: 65,
-          family: 'Ryzen',
-          id: 1,
-          owner_id: 1,
-        },
-      ];
+      const expected = {
+        'category_id': 1,
+        'name': '3700x',
+        'cores': 8,
+        'integrated_gpu': false,
+        'tdp': 65,
+        'family': 'Ryzen',
+        'id': 1,
+        'owner_id': 1,
+      };
     
       const data = await fakeRequest(app)
         .delete('/cpuData/1')
         .expect('Content-Type', /json/)
         .expect(200);
     
-      expect(data.body).toEqual(expectation);
+      expect(data.body).toEqual(expected);
     
       const nothing = await fakeRequest(app)
         .get('/cpuData/1')
         .expect('Content-Type', /json/)
         .expect(200);
     
-      expect(nothing.body).toEqual(expectation);
+      expect(nothing.body).toEqual('');
     });
 
     test('UPDATES a cpu', async () => {
       const newCpu = [
         {
           category_id: 1,
-          name: '3950x',
+          name: '3700x',
           cores: 16,
           integrated_gpu: false,
           tdp: 105,

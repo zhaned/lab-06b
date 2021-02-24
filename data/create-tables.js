@@ -17,16 +17,21 @@ async function run() {
                     email VARCHAR(256) NOT NULL,
                     hash VARCHAR(512) NOT NULL
                 );           
+                CREATE TABLE categories (
+                  id SERIAL PRIMARY KEY NOT NULL,
+                  name VARCHAR(512) NOT NULL
+                );
                 CREATE TABLE cpuData (
                     id SERIAL PRIMARY KEY NOT NULL,
-                    category_id INTEGER NOT NULL,
+                    category_id INTEGER NOT NULL REFERENCES categories(id),
                     name VARCHAR(512) NOT NULL,
                     cores INTEGER NOT NULL,
                     integrated_gpu BOOLEAN NOT NULL,
                     tdp INTEGER NOT NULL,
                     family VARCHAR(512) NOT NULL,
                     owner_id INTEGER NOT NULL REFERENCES users(id)
-            );
+                );
+
         `);
 
     console.log('create tables complete', getEmoji(), getEmoji(), getEmoji());
