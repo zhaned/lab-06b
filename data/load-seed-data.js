@@ -27,11 +27,11 @@ async function run() {
     await Promise.all(
       cpuData.map(cpuData => {
         return client.query(`
-                    INSERT INTO cpuData (id, name, cores, integrated_gpu, tdp, family, owner_id)
+                    INSERT INTO cpuData (category_id, name, cores, integrated_gpu, tdp, family, owner_id)
                     VALUES ($1, $2, $3, $4, $5, $6, $7);
                 `,
         [
-          cpuData.id, 
+          cpuData.category_id, 
           cpuData.name, 
           cpuData.cores, 
           cpuData.integrated_gpu, 

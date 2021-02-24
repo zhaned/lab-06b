@@ -1,6 +1,6 @@
 module.exports = [
   {
-    id: 1,
+    category_id: 1,
     name: '3700x',
     cores: 8,
     integrated_gpu: false,
@@ -8,7 +8,7 @@ module.exports = [
     family: 'Ryzen',
   },
   {
-    id: 2,
+    category_id: 1,
     name: '3600',
     cores: 6,
     integrated_gpu: false,
@@ -16,7 +16,7 @@ module.exports = [
     family: 'Ryzen',
   },  
   {
-    id: 3,
+    category_id: 2,
     name: '3000g',
     cores: 2,
     integrated_gpu: true,
@@ -24,7 +24,7 @@ module.exports = [
     family: 'Athlon',
   },
   {
-    id: 4,
+    category_id: 1,
     name: '3900x',
     cores: 12,
     integrated_gpu: false,
@@ -32,7 +32,7 @@ module.exports = [
     family: 'Ryzen',
   },
   {
-    id: 5,
+    category_id: 1,
     name: '3200g',
     cores: 4,
     integrated_gpu: true,

@@ -19,6 +19,7 @@ async function run() {
                 );           
                 CREATE TABLE cpuData (
                     id SERIAL PRIMARY KEY NOT NULL,
+                    category_id INTEGER NOT NULL,
                     name VARCHAR(512) NOT NULL,
                     cores INTEGER NOT NULL,
                     integrated_gpu BOOLEAN NOT NULL,
