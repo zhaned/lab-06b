@@ -161,20 +161,21 @@ describe('app routes', () => {
         .expect(200);
 
       expect(data.body).toEqual(expectation);
-
+    
       const nothing = await fakeRequest(app)
         .get('/cpuData/1')
         .expect('Content-Type', /json/)
         .expect(200);
 
       expect(nothing.body).toEqual([]);
+
     });
 
     test('UPDATES a cpu', async () => {
       const newCpu =
         {
           category_id: 1,
-          name: '3950x',
+          name: '3700x',
           cores: 16,
           integrated_gpu: false,
           tdp: 105,
