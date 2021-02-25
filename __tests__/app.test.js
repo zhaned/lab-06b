@@ -144,7 +144,7 @@ describe('app routes', () => {
         .delete('/cpuData/1')
         .expect('Content-Type', /json/)
         .expect(200);
-
+      
       expect(data.body).toEqual(expected);
 
       const nothing = await fakeRequest(app)
@@ -164,6 +164,7 @@ describe('app routes', () => {
         tdp: 105,
         family: 'Ryzen',
       };
+
 
       const expectedCpu = {
         category: 'Ryzen',
