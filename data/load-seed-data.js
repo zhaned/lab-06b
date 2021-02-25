@@ -24,7 +24,7 @@ async function run() {
       })
     );
 
-    const placeholder = await Promise.all(
+    const reponses = await Promise.all(
       categoriesData.map(category => {
         return client.query(`
                       INSERT INTO categories (name)
@@ -37,7 +37,7 @@ async function run() {
 
     const user = users[0].rows[0];
 
-    const categories = placeholder.map(({ rows }) => rows[0]);
+    const categories = reponses.map(({ rows }) => rows[0]);
 
     await Promise.all(
       cpuData.map(cpuData => {
