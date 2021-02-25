@@ -15,12 +15,10 @@ describe('app routes', () => {
 
       client.connect();
 
-      const signInData = await fakeRequest(app)
-        .post('/auth/signup')
-        .send({
-          email: 'jon@user.com',
-          password: '1234',
-        });
+      const signInData = await fakeRequest(app).post('/auth/signup').send({
+        email: 'jon@user.com',
+        password: '1234',
+      });
 
       token = signInData.body.token; // eslint-disable-line
 
@@ -116,16 +114,14 @@ describe('app routes', () => {
     });
 
     test('add a new cpu', async () => {
-      const newCpu = [
-        {
-          category_id: 1,
-          name: '3950x',
-          cores: 16,
-          integrated_gpu: false,
-          tdp: 105,
-          family: 'Ryzen',
-        },
-      ];
+      const newCpu = {
+        category_id: 1,
+        name: '3950x',
+        cores: 16,
+        integrated_gpu: false,
+        tdp: 105,
+        family: 'Ryzen',
+      };
 
       const expectedCpu = {
         category_id: 1,
@@ -144,39 +140,39 @@ describe('app routes', () => {
         .expect('Content-Type', /json/)
         .expect(200);
 
-      expect(data.body).toEqual(expectedCpu);
-
+      expect(data.body[0]).toEqual(expectedCpu);
     });
 
     test('deletes the first data item', async () => {
-      const expected = {
-        'category_id': 1,
-        'name': '3700x',
-        'cores': 8,
-        'integrated_gpu': false,
-        'tdp': 65,
-        'family': 'Ryzen',
-        'id': 1,
-        'owner_id': 1,
+      const expectation = {
+        category_id: 1,
+        name: '3700x',
+        cores: 8,
+        integrated_gpu: false,
+        tdp: 65,
+        family: 'Ryzen',
+        id: 1,
+        owner_id: 1,
       };
-    
+
       const data = await fakeRequest(app)
         .delete('/cpuData/1')
         .expect('Content-Type', /json/)
         .expect(200);
-    
-      expect(data.body).toEqual(expected);
+
+      expect(data.body).toEqual(expectation);
     
       const nothing = await fakeRequest(app)
         .get('/cpuData/1')
         .expect('Content-Type', /json/)
         .expect(200);
-    
-      expect(nothing.body).toEqual('');
+
+      expect(nothing.body).toEqual([]);
+
     });
 
     test('UPDATES a cpu', async () => {
-      const newCpu = [
+      const newCpu =
         {
           category_id: 1,
           name: '3700x',
@@ -184,29 +180,26 @@ describe('app routes', () => {
           integrated_gpu: false,
           tdp: 105,
           family: 'Ryzen',
-        },
-      ];
+        };
 
       const expectedCpu = {
         ...newCpu,
         owner_id: 1,
-        id: 1
+        id: 2,
       };
 
       await fakeRequest(app)
-        .put('/cpuData/1')
+        .put('/cpuData/2')
         .send(newCpu)
         .expect('Content-Type', /json/)
         .expect(200);
 
       const updatedCpu = await fakeRequest(app)
-        .get('/cpuData/1')
+        .get('/cpuData/2')
         .expect('Content-Type', /json/)
         .expect(200);
-      
-      expect(updatedCpu.body).toEqual(expectedCpu);
 
+      expect(updatedCpu.body[0]).toEqual(expectedCpu);
     });
   });
 });
-
