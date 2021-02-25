@@ -32,53 +32,48 @@ describe('app routes', () => {
     test('returns data', async () => {
       const expectation = [
         {
-          category_id: 1,
-          name: '3700x',
-          cores: 8,
-          integrated_gpu: false,
-          tdp: 65,
-          family: 'Ryzen',
-          id: 1,
-          owner_id: 1,
-        },
-        {
-          category_id: 1,
-          name: '3600',
-          cores: 6,
-          integrated_gpu: false,
-          tdp: 65,
-          family: 'Ryzen',
-          id: 2,
-          owner_id: 1,
-        },
-        {
-          category_id: 2,
-          name: '3000g',
-          cores: 2,
-          integrated_gpu: true,
-          tdp: 35,
-          family: 'Athlon',
-          id: 3,
-          owner_id: 1,
-        },
-        {
-          category_id: 1,
-          name: '3900x',
-          cores: 12,
-          integrated_gpu: false,
-          tdp: 105,
-          family: 'Ryzen',
-          id: 4,
-          owner_id: 1,
-        },
-        {
-          category_id: 1,
+          category: 'Ryzen',
           name: '3200g',
           cores: 4,
           integrated_gpu: true,
           tdp: 65,
           family: 'Ryzen',
-          id: 5,
+          owner_id: 1,
+        },
+        {
+          category: 'Ryzen',
+          name: '3900x',
+          cores: 12,
+          integrated_gpu: false,
+          tdp: 105,
+          family: 'Ryzen',
+          owner_id: 1,
+        },
+        {
+          category: 'Ryzen',
+          name: '3600',
+          cores: 6,
+          integrated_gpu: false,
+          tdp: 65,
+          family: 'Ryzen',
+          owner_id: 1,
+        },
+        {
+          category: 'Ryzen',
+          name: '3700x',
+          cores: 8,
+          integrated_gpu: false,
+          tdp: 65,
+          family: 'Ryzen',
+          owner_id: 1,
+        },
+        {
+          category: 'Athlon',
+          name: '3000g',
+          cores: 2,
+          integrated_gpu: true,
+          tdp: 35,
+          family: 'Athlon',
           owner_id: 1,
         },
       ];
@@ -94,13 +89,12 @@ describe('app routes', () => {
     test('returns the first data item', async () => {
       const expectation = [
         {
-          category_id: 1,
+          category: 'Ryzen',
           name: '3700x',
           cores: 8,
           integrated_gpu: false,
           tdp: 65,
           family: 'Ryzen',
-          id: 1,
           owner_id: 1,
         },
       ];
@@ -140,52 +134,46 @@ describe('app routes', () => {
         .expect('Content-Type', /json/)
         .expect(200);
 
-      expect(data.body[0]).toEqual(expectedCpu);
+      expect(data.body).toEqual(expectedCpu);
     });
 
     test('deletes the first data item', async () => {
-      const expectation = {
-        category_id: 1,
-        name: '3700x',
-        cores: 8,
-        integrated_gpu: false,
-        tdp: 65,
-        family: 'Ryzen',
-        id: 1,
-        owner_id: 1,
-      };
+      const expected = [];
 
       const data = await fakeRequest(app)
         .delete('/cpuData/1')
         .expect('Content-Type', /json/)
         .expect(200);
+      
+      expect(data.body).toEqual(expected);
 
-      expect(data.body).toEqual(expectation);
-    
       const nothing = await fakeRequest(app)
         .get('/cpuData/1')
         .expect('Content-Type', /json/)
         .expect(200);
 
       expect(nothing.body).toEqual([]);
-
     });
 
     test('UPDATES a cpu', async () => {
-      const newCpu =
-        {
-          category_id: 1,
-          name: '3700x',
-          cores: 16,
-          integrated_gpu: false,
-          tdp: 105,
-          family: 'Ryzen',
-        };
+      const newCpu = {
+        category_id: 1,
+        name: '3950x',
+        cores: 16,
+        integrated_gpu: false,
+        tdp: 105,
+        family: 'Ryzen',
+      };
+
 
       const expectedCpu = {
-        ...newCpu,
+        category: 'Ryzen',
+        name: '3950x',
+        cores: 16,
+        integrated_gpu: false,
+        tdp: 105,
+        family: 'Ryzen',
         owner_id: 1,
-        id: 2,
       };
 
       await fakeRequest(app)
