@@ -188,5 +188,25 @@ describe('app routes', () => {
 
       expect(updatedCpu.body[0]).toEqual(expectedCpu);
     });
+
+    test('returns all categories', async () => {
+      const expectation = [
+        {
+          id: 1,
+          name: 'Ryzen'
+        },
+        {
+          id: 2,
+          name: 'Athlon'
+        }
+      ];
+
+      const data = await fakeRequest(app)
+        .get('/categories')
+        .expect('Content-Type', /json/)
+        .expect(200);
+
+      expect(data.body).toEqual(expectation);
+    });
   });
 });
